@@ -9,7 +9,7 @@ public class MainService {
     }
 
     public void doJob() {
-        String data = mainComponent.getData();
+        String data = mainComponent.getData("hello ");
         System.out.println(data);
     }
 }

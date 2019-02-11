@@ -1,3 +1,3 @@
 public interface MainComponent {
-    String getData();
+    String getData(String s);
 }

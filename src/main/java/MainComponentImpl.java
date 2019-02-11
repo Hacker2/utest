@@ -1,5 +1,5 @@
 public class MainComponentImpl implements MainComponent {
-    public String getData() {
-        return "hello world";
+    public String getData(String s) {
+        return s + "world";
     }
 }

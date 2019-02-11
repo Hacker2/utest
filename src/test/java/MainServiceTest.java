@@ -17,10 +17,10 @@ public class MainServiceTest {
 
     @Test
     public void doJob() {
-        when(mainComponent.getData()).thenReturn("test data");
+        when(mainComponent.getData(any(String.class))).thenReturn("test data");
 
         mainService.doJob();
 
-        verify(mainComponent).getData();
+        verify(mainComponent).getData(any(String.class));
     }
 }
