@@ -8,13 +8,10 @@ import static org.mockito.Mockito.when;
 @RunWith(URunner.class)
 public class MainServiceUTest {
 
-//    @InjectMocks
     private MainService mainService;
 
     @Test
     public void doJob() {
-        when(mainService.mainComponent.getData()).thenReturn("test data");
-
         mainService.doJob();
 
         Mockito.verify(mainService.mainComponent).getData();

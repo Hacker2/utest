@@ -9,6 +9,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class URunner extends Runner {
 
@@ -27,7 +28,6 @@ public class URunner extends Runner {
         try {
             Object testObject = testClass.newInstance();
             for(Field mainServiceField : testClass.getDeclaredFields()) {
-//                if (mainServiceField.isAnnotationPresent(InjectMocks.class)) {
                     mainServiceField.setAccessible(true);
                     Class mainServiceClass = mainServiceField.getType();
                     Object mainServiceInstance = mainServiceClass.newInstance();
@@ -36,16 +36,14 @@ public class URunner extends Runner {
                     for (Field innerField : mainServiceInstance.getClass().getDeclaredFields()) {
                         innerField.setAccessible(true);
                         Class innerType = innerField.getType();
-                        innerField.set(mainServiceInstance, mock(innerType));
+                        Object mockInstance = mock(innerType);
+                        innerField.set(mainServiceInstance, mockInstance);
 
-                        for(Method method : innerType.getDeclaredMethods()) {
-//                            doReturn("").when(method);
-//                            when(mock(innerType).method).thenReturn(method);
-//                            when(method).thenReturn(method);
-//                            when(method).thenReturn(mock(method.getReturnType()));
+                        for(Method method : innerType.getMethods()) {
+                            Object returnObject = method.getReturnType().newInstance();
+                            when(method.invoke(mockInstance)).thenReturn(returnObject);
                         }
                     }
-//                }
             }
             for (Method method : testClass.getMethods()) {
                 if (method.isAnnotationPresent(Test.class)) {
